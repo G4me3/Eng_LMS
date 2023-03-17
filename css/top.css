@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+}
+
+#header {
+    background-color: #009094;
+    height: 10vh;
+}
+
+#welcome-msg{
+    font-size: 25px;
+    margin-top: 1vh;
+    margin-left: 1vw;
+}
+
+.score-table {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+
+.score-table th,
+.score-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.score-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+@media(min-width:1300px) {
+    #welcome-msg{
+        font-size: 29px;
+    }
+
+    .score-table td{
+        font-size: 18px;
+    }
+    .score-table th{
+        font-size: 20px;
+    }
+}

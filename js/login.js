@@ -65,6 +65,7 @@ function checkIDAndPass(id, pass, event) {
         if (IDAndPassList[id] == pass) {
             event.stopPropagation();
             event.preventDefault();
+            document.cookie=`${id} is authenticated`;
             window.location.href = `./top.html?ID=${id}&auth=true`;
         } else {
             alert("IDまたはPasswordが間違っています");

@@ -3,7 +3,6 @@
 // if login is not authenticated, back to login page
 // that means it doesn't allow direct access except for onself
 const cookie = document.cookie;
-console.log(cookie);
 if (cookie != getParam("ID", "") + " is authenticated") {
     window.location.href = "login.html";
 }

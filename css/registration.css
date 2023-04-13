@@ -11,15 +11,26 @@ form {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -40%);
+    transform: translate(-50%, -30%);
     padding: 10px;
     width: 300px;
     font-size: 17px;
 }
 
 input[type="text"],
-input[type="password"] {
-    padding: 7px 5px;
+input[type="password"],
+input[type="number"] {
+    padding: 3px 3px;
+    width: 95%;
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+select {
+    text-align: center;
+    padding: 3px 3px;
     width: 95%;
     border: 1px solid black;
     border-radius: 7px;
@@ -37,11 +48,7 @@ label[for="show-password"] {
     cursor: pointer;
 }
 
-#register-page-link {
-    color: #1a0dab;
-}
-
-#login-btn {
+#register-btn {
     margin-top: 10px;
     position: relative;
     background-color: #009094;
@@ -54,14 +61,12 @@ label[for="show-password"] {
     font-size: 15px;
 }
 
-#login-btn:hover {
+#register-btn:hover {
     opacity: 0.8;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1300px) {
     form {
-        width: 100%;
-        left: 0;
-        transform: none;
+        transform: translate(-50%,-50%);
     }
 }

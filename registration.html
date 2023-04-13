@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/registration.css">
+    <title>ユーザー登録ページ</title>
+  </head>
+  <body>
+    <header id="header"></header>
+    <form id="register-form" onsubmit="return validateForm()" method="post">
+      <label for="name">ID</label><br>
+      <input type="text" id="id" name="id" required><br><br>
+      <label for="department">所属学部</label><br>
+      <select id="department" name="department" required>
+        <option value="">-- 選択してください --</option>
+        <option value="国際関係学部">国際関係学部</option>
+        <option value="経営情報学部">経営情報学部</option>
+        <option value="薬学部">薬学部</option>
+      </select><br><br>
+      <label for="undergraduate-year">学年</label><br>
+      <select id="undergraduate-year" name="undergraduate-year" required>
+        <option>-- 選択してください --</option>
+        <option value="1">1年</option>    
+        <option value="2">2年</option>    
+        <option value="3">3年</option>    
+        <option value="4">4年</option>    
+      </select><br><br>
+      <label for="class-year">授業年度</label><br>
+      <input type="number" id="class-year" name="class-year" required><br><br>
+      <label for="password">Password</label><br>
+      <input type="password" id="password" name="password" required minlength="6"><br>
+      <input type="checkbox" id="show-password" name="show-password">
+      <label for="show-password">パスワードを表示</label><br><br>
+      <input id="register-btn" type="submit" value="登録">
+    </form>
+    <script src="./js/registration.js"></script>
+  </body>
+</html>

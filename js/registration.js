@@ -93,7 +93,7 @@ function registUserInformation(event) {
     };
 
     fetch(URL, postparam).then(() => {
-        alert(`ユーザー登録が完了しました\nID : [${sendData.ID}]\npass : [${sendData.pass}]\n忘れずにメモしてください `)
+        alert(`ユーザー登録が完了しました\nID : [${sendData.ID}]\nPassword : [${sendData.pass}]\n忘れずにメモしてください `)
         location.href = "./login.html";
     });
 

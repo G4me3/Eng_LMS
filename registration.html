@@ -7,12 +7,12 @@
   </head>
   <body>
     <header id="header"></header>
-    <form id="register-form" onsubmit="return validateForm()">
+    <form id="register-form">
       <label for="name">ID</label><br>
       <input type="text" id="id" name="id" required><br><br>
       <label for="department">所属学部</label><br>
       <select id="department" name="department" required>
-        <option value="">-- 選択してください --</option>
+        <option>-- 選択してください --</option>
         <option value="国際関係学部">国際関係学部</option>
         <option value="経営情報学部">経営情報学部</option>
         <option value="薬学部">薬学部</option>
@@ -25,8 +25,13 @@
         <option value="3">3年</option>    
         <option value="4">4年</option>    
       </select><br><br>
-      <label for="class-year">授業年度</label><br>
-      <input type="number" id="class-year" name="class-year" required><br><br>
+      <label for="class-type">クラス</label>
+      <select id="class-type" name="class-type" required>
+        <option>-- 選択してください --</option>
+        <option>鈴木先生</option>
+        <option>佐藤先生</option>
+        <option>高橋先生</option>
+      </select><br><br>
       <label for="password">Password</label><br>
       <input type="password" id="password" name="password" required minlength="6"><br>
       <input type="checkbox" id="show-password" name="show-password">

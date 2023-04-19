@@ -1,82 +1,67 @@
-let jsonArray;
 async function getJson() {
     const res = await fetch('https://script.google.com/macros/s/AKfycbwCdosPs3w2ieCN2r7IOIC30oKslgnvOhP5mIOih0YRYPJtr3UHjUv-fPRuoaHcru32/exec');
     const data = await res.json();
     return data;
 }
 
-let IDAndPassList = {};
-getJson().then(data => {
-    jsonArray = data;
-    for (let index in jsonArray[0]) {
-        IDAndPassList[jsonArray[0][index]["ID"]] = jsonArray[0][index]["pass"];
-    }
-}).catch(err => {
-    console.log(err);
-})
+// Create ID and password list from Json data
+async function createIDAndPassList() {
+    const data = await getJson();
+    const jsonArray = data[0];
+    const IDAndPassList = {};
+    jsonArray.forEach(item => {
+        IDAndPassList[item.ID] = item.pass;
+    });
+    return IDAndPassList;
+}
 
-//show password when「パスワードを表示」clicked
+// Event to show password 
 const showPasswordCheckbox = document.getElementById("show-password");
+const passwordInput = document.getElementById("password");
 showPasswordCheckbox.addEventListener("change", function () {
-    const passwordInput = document.getElementById("password");
-    if (showPasswordCheckbox.checked) {
-        passwordInput.type = "text";
-    } else {
-        passwordInput.type = "password";
-    }
+    passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
 });
 
-//Even Litener of form submit
+// Event to login form
 const loginForm = document.getElementById("login-form");
-loginForm.addEventListener("submit", function (event) {
-    const id = document.getElementById("id").value;
-    const pass = document.getElementById("password").value;
-    if (checkParam(id, pass, event)) {
-        checkIDAndPass(id, pass, event);
-    };
-})
+loginForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const idInput = document.getElementById("id");
+    const passInput = document.getElementById("password");
+    const id = idInput.value;
+    const pass = passInput.value;
+    if (!checkParam(id, pass)) {
+        return;
+    }
+    const IDAndPassList = await createIDAndPassList();
+    if (!checkIDAndPass(IDAndPassList, id, pass)) {
+        return;
+    }
+    document.cookie = `${id} is authenticated`;
+    window.location.href = `./top.html?ID=${id}&auth=true`;
+});
 
-//check parameter when「Login」clicked(submit form) 
-function checkParam(id, pass, event) {
-    if (id.value == "" && pass.value == "") {
+// check parameter
+function checkParam(id, pass) {
+    if (id === "" && pass === "") {
         alert("IDが入力されていません \n Passwordが入力されていません")
-        event.stopPropagation();
-        event.preventDefault();
         return false;
-    } else if (id.value == "") {
+    } else if (id === "") {
         alert("IDが入力されていません");
-        event.stopPropagation();
-        event.preventDefault();
         return false;
-    } else if (pass.value == "") {
+    } else if (pass === "") {
         alert("Passwordが入力されていません");
-        event.stopPropagation();
-        event.preventDefault();
         return false;
     } else {
         return true;
     }
 }
 
-//check ID and Password are correct 
-function checkIDAndPass(id, pass, event) {
-    const keys = Object.keys(IDAndPassList);
-    if (keys.includes(id)) {
-        if (IDAndPassList[id] == pass) {
-            event.stopPropagation();
-            event.preventDefault();
-            document.cookie=`${id} is authenticated`;
-            window.location.href = `./top.html?ID=${id}&auth=true`;
-        } else {
-            alert("IDまたはPasswordが間違っています");
-            event.stopPropagation();
-            event.preventDefault();
-            return false;
-        }
-    } else {
+// check ID and Password
+function checkIDAndPass(IDAndPassList, id, pass) {
+    if (!IDAndPassList.hasOwnProperty(id) || IDAndPassList[id] !== pass) {
         alert("IDまたはPasswordが間違っています");
-        event.stopPropagation();
-        event.preventDefault();
         return false;
     }
+    return true;
 }

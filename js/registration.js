@@ -16,6 +16,11 @@ document.getElementById("register-form").addEventListener("submit", function (e)
     }
 });
 
+function stopEvent(event) {
+    event.stopPropagation();
+    event.preventDefault();
+}
+
 // //check value of form
 function validateForm(event) {
     const ID = document.getElementById("id").value;
@@ -28,33 +33,28 @@ function validateForm(event) {
 
     if (ID == "") {
         alert("IDを入力してください");
-        event.stopPropagation();
-        event.preventDefault();
+        stopEvent(event);
         return false;
     }
 
     if (department == "-- 選択してください --") {
         alert("所属学部を選択してください");
-        event.stopPropagation();
-        event.preventDefault();
+        stopEvent(event);
         return false;
     }
     if (undergraduateYear == "-- 選択してください --") {
         alert("学年を選択してください");
-        event.stopPropagation();
-        event.preventDefault();
+        stopEvent(event);
         return false;
     }
     if (classType == "-- 選択してください --") {
         alert("クラスを選択してください");
-        event.stopPropagation();
-        event.preventDefault();
+        stopEvent(event);
         return false;
     }
     if (!regex.test(password)) {
         alert("パスワードは英数字6文字以上で入力してください");
-        event.stopPropagation();
-        event.preventDefault();
+        stopEvent(event);
         return false;
     }
     return true;
@@ -70,7 +70,7 @@ function registUserInformation(event) {
     const classType = document.getElementById("class-type").value;
     const password = document.getElementById("password").value;
     const userInformationArray = [ID, department, undergraduateYear, classYear, classType, password];
-    
+
     const URL = 'https://script.google.com/macros/s/AKfycbygMkwZCa-6mJ7uU5AROMwA-SZ_Px5jqRyOqDehW0a3qeqNdEsseADX9FY7tTihue0d/exec';
     const sendData = {
         "ID": userInformationArray[0],
@@ -80,7 +80,7 @@ function registUserInformation(event) {
         "授業年度": userInformationArray[3],
         "class": userInformationArray[4]
     };
-    
+
     var postparam =
     {
         "method": "POST",
@@ -88,9 +88,7 @@ function registUserInformation(event) {
         "Content-Type": "application/x-www-form-urlencoded",
         "body": JSON.stringify(sendData),
     };
-    
-    event.stopPropagation();
-    event.preventDefault();
+    stopEvent(event);
     fetch(URL, postparam).then(() => {
         alert(`ユーザー登録が完了しました\nID : [${sendData.ID}]\nPassword : [${sendData.pass}]\n忘れずにメモしてください `)
         location.href = "./login.html";

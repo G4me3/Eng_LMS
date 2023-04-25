@@ -15,3 +15,37 @@ function getParam(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+const questionTab = document.querySelector('#questionTab');
+const scoreTab = document.querySelector('#scoreTab');
+const createQuestionSection = document.querySelector('#create-question');
+const viewScoresSection = document.querySelector('#view-scores');
+
+// 初期表示の設定
+questionTab.classList.add('active');
+createQuestionSection.style.display = 'block';
+viewScoresSection.style.display = 'none';
+
+questionTab.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  // クリックされたタブをアクティブにする
+  questionTab.classList.add('active');
+  scoreTab.classList.remove('active');
+
+  // 表示するセクションを切り替える
+  createQuestionSection.style.display = 'block';
+  viewScoresSection.style.display = 'none';
+});
+
+scoreTab.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  // クリックされたタブをアクティブにする
+  scoreTab.classList.add('active');
+  questionTab.classList.remove('active');
+
+  // 表示するセクションを切り替える
+  viewScoresSection.style.display = 'block';
+  createQuestionSection.style.display = 'none';
+});

@@ -39,9 +39,16 @@ body {
     align-items: center;
 }
 
-.global-nav a:hover {
-    background-color: #d1d0d0;
+
+
+.tab{
+    padding: 1rem;
+    margin-right: 1px;
 }
+
+.tab.active {
+    background-color: #66cc66;
+  }
 
 img {
     margin-right: 0.5rem;

@@ -11,14 +11,20 @@
 
   <nav class="global-nav">
     <ul>
-        <li><a href="#"><img src="./img/create-ploblem-icon.svg" alt="Create Problem">問題作成</a></li>
-        <li><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
+        <li class="tab" id="questionTab"><a href="#"><img src="./img/create-question-icon.svg" alt="Create Question">問題作成</a></li>
+        <li class="tab" id="scoreTab"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
     </ul>
   </nav>
 
   <main>
-    <h1>管理画面</h1>
+    <div id="create-question">
+      <h2>問題作成</h2>
+      <p>問題作成のフォーム</p>
+    </div>
+    <div id="view-scores">
+    <h2>成績閲覧</h2>
     <p>ここにコンテンツが入ります。</p>
+    </div>
   </main>
 
   <script src="./js/admin.js"></script>

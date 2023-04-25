@@ -1,3 +1,4 @@
+// get Json from Google SpreadSheet
 async function getJson() {
     const res = await fetch('https://script.google.com/macros/s/AKfycbwCdosPs3w2ieCN2r7IOIC30oKslgnvOhP5mIOih0YRYPJtr3UHjUv-fPRuoaHcru32/exec');
     const data = await res.json();
@@ -5,12 +6,16 @@ async function getJson() {
 }
 
 // Create ID and password list from Json data
+const adminList=[];
 async function createIDAndPassList() {
     const data = await getJson();
     const jsonArray = data[0];
     const IDAndPassList = {};
     jsonArray.forEach(item => {
         IDAndPassList[item.ID] = item.pass;
+        if(item.authority=="administrator"){
+            adminList.push(item.ID);
+        }
     });
     return IDAndPassList;
 }
@@ -21,6 +26,19 @@ const passwordInput = document.getElementById("password");
 showPasswordCheckbox.addEventListener("change", function () {
     passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
 });
+
+// check user is admin or not and move page depends on the result
+function checkAuthority(loginID){
+    adminList.forEach(admin=>{
+        if(admin==loginID){
+            document.cookie = `${loginID} is authenticated and admin`;
+            window.location.href=`./admin.html?ID=${loginID}&auth=true`;
+        }else{
+            document.cookie = `${loginID} is authenticated`;
+            window.location.href = `./top.html?ID=${loginID}&auth=true`;
+        }
+    })
+}
 
 // Event to login form
 const loginForm = document.getElementById("login-form");
@@ -37,8 +55,7 @@ loginForm.addEventListener("submit", async function (event) {
     if (!checkIDAndPass(IDAndPassList, id, pass)) {
         return;
     }
-    document.cookie = `${id} is authenticated`;
-    window.location.href = `./top.html?ID=${id}&auth=true`;
+    checkAuthority(id);
 });
 
 // check parameter

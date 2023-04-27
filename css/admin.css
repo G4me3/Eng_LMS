@@ -71,7 +71,7 @@ select {
     width: 140px;
     height: 25px;
     text-align: center;
-    margin-bottom: 2.5vh;
+    margin-bottom: 2vh;
 }
 
 #form-wrapper {
@@ -89,10 +89,16 @@ select {
 }
 
 #grammar-questions {
-    /* margin-top: 10px; */
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-input[type="number"] {
+#vocabulary-questions{
+    margin-bottom: 10px;
+}
+
+.number-box {
     width: 70px
 }
 
@@ -108,7 +114,10 @@ input[type="number"] {
     border-radius: 3px;
 }
 
-#generate-btn {}
+#generate-btn {
+    position: relative;
+    left: 8%;
+}
 
 #generate-btn:hover,
 #submit-btn:hover {
@@ -118,5 +127,9 @@ input[type="number"] {
 @media(min-width:1300px) {
     .global-nav {
         height: 50px;
+    }
+    .number-box{
+        width: 100px;
+        height: 20px;
     }
 }

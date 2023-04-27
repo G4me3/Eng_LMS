@@ -58,13 +58,12 @@ const formWrapper = document.getElementById('form-wrapper');
 function createRandomForm() {
   formWrapper.innerHTML = `
   <label for="grammar-questions">文法：</label>
-  <input type="number" id="grammar-questions" name="grammar-questions" min="0" max="100" step="1">
+  <input type="text" id="grammar-questions" class="number-box" name="grammar-questions" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
   <span>問</span><br>
   <label for="vocabulary-questions">語彙：</label>
-  <input type="number" id="vocabulary-questions" name="vocabulary-questions" min="0" max="100" step="1">
+  <input type="text" id="vocabulary-questions" class="number-box" name="vocabulary-questions" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
   <span>問</span><br>
   <input type="button" id="generate-btn" value="生成"><br>
-  <input type="submit" id="submit-btn" value="登録">
   `;
 }
 

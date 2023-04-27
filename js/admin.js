@@ -21,7 +21,7 @@ const scoreTab = document.querySelector('#scoreTab');
 const createQuestionSection = document.querySelector('#create-question');
 const viewScoresSection = document.querySelector('#view-scores');
 
-// 初期表示の設定
+// initiallize
 questionTab.classList.add('active');
 createQuestionSection.style.display = 'block';
 viewScoresSection.style.display = 'none';
@@ -29,11 +29,11 @@ viewScoresSection.style.display = 'none';
 questionTab.addEventListener('click', function(event) {
   event.preventDefault();
 
-  // クリックされたタブをアクティブにする
+  // make clicked tab active
   questionTab.classList.add('active');
   scoreTab.classList.remove('active');
 
-  // 表示するセクションを切り替える
+  // change section shown
   createQuestionSection.style.display = 'block';
   viewScoresSection.style.display = 'none';
 });
@@ -41,11 +41,57 @@ questionTab.addEventListener('click', function(event) {
 scoreTab.addEventListener('click', function(event) {
   event.preventDefault();
 
-  // クリックされたタブをアクティブにする
+  // make clicked tab active 
   scoreTab.classList.add('active');
   questionTab.classList.remove('active');
 
-  // 表示するセクションを切り替える
+  // change section shown
   viewScoresSection.style.display = 'block';
   createQuestionSection.style.display = 'none';
+});
+
+// DOM要素を取得
+const createTypeSelect = document.getElementById('create-type');
+const formWrapper = document.getElementById('form-wrapper');
+
+// フォーム要素を作成
+function createRandomForm() {
+  formWrapper.innerHTML = `
+    <label for="grammar-questions">文法：</label>
+    <input type="number" id="grammar-questions" name="grammar-questions" min="0" max="100" step="1">
+    <span>問</span>
+
+    <label for="vocabulary-questions">語彙：</label>
+    <input type="number" id="vocabulary-questions" name="vocabulary-questions" min="0" max="100" step="1">
+    <span>問</span>
+
+    <button id="generate-btn" type="button">生成</button>
+    <button id="submit-btn" type="button">登録</button>
+  `;
+}
+
+function createSelectForm() {
+  formWrapper.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>問題名</th>
+          <th>作成日</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 表の内容がここに入ります -->
+      </tbody>
+    </table>
+  `;
+}
+
+// セレクトボックスが変更されたら対応するフォームを表示
+createTypeSelect.addEventListener('change', function() {
+  if (createTypeSelect.value === 'random') {
+    createRandomForm();
+  } else if (createTypeSelect.value === 'select') {
+    createSelectForm();
+  }
 });

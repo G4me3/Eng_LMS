@@ -58,10 +58,6 @@ label[for="show-password"] {
     opacity: 0.8;
 }
 
-@media (max-width: 768px) {
-    form {
-        width: 100%;
-        left: 0;
-        transform: none;
-    }
+@media (max-width: 400px) {
+    
 }

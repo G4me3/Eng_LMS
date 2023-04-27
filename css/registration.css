@@ -65,6 +65,12 @@ label[for="show-password"] {
     opacity: 0.8;
 }
 
+@media(max-width:400px){
+    form{
+        transform: translate(-50%, -40%);
+    }
+}
+
 @media (min-width: 1300px) {
     form {
         transform: translate(-50%,-50%);

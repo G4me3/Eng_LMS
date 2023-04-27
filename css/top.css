@@ -38,6 +38,19 @@ body {
     font-size: 18px;
 }
 
+@media(max-width:400px){
+    #welcome-msg{
+        font-size: 20px;
+    }
+
+    .score-table td{
+        font-size: 14px;
+    }
+    .score-table th{
+        font-size: 17px;
+    }
+}
+
 @media(min-width:1300px) {
     #welcome-msg{
         font-size: 29px;

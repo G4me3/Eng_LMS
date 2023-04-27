@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理者ページ</title>
   <link rel="stylesheet" href="./css/admin.css">
 </head>
+
 <body>
   <header id="header">
   </header>
 
   <nav class="global-nav">
     <ul>
-        <li class="tab" id="questionTab"><a href="#"><img src="./img/create-question-icon.svg" alt="Create Question">問題作成</a></li>
-        <li class="tab" id="scoreTab"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
+      <li class="tab" id="questionTab"><a href="#"><img src="./img/create-question-icon.svg"
+            alt="Create Question">問題作成</a></li>
+      <li class="tab" id="scoreTab"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
     </ul>
   </nav>
 
   <main>
     <div id="create-question">
-      <h2>問題作成</h2>
-      <p>問題作成のフォーム</p>
+      <label for="create-type">作成タイプ：</label>
+      <select id="create-type">
+        <option value="random">ランダム作成</option>
+        <option value="select">選択作成</option>
+      </select>
+      <div id="form-wrapper">
+        <label for="grammar-questions">文法：</label>
+        <input type="number" id="grammar-questions" name="grammar-questions" min="0" max="100" step="1">
+        <span>問</span>
+        <label for="vocabulary-questions">語彙：</label>
+        <input type="number" id="vocabulary-questions" name="vocabulary-questions" min="0" max="100" step="1">
+        <span>問</span>
+        <button id="generate-btn" type="button">生成</button>
+        <button id="submit-btn" type="button">登録</button>
+      </div>
     </div>
     <div id="view-scores">
-    <h2>成績閲覧</h2>
-    <p>ここにコンテンツが入ります。</p>
+      <h2>成績閲覧</h2>
+      <p>ここにコンテンツが入ります。</p>
     </div>
   </main>
 
   <script src="./js/admin.js"></script>
 </body>
+
 </html>

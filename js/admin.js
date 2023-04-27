@@ -2,18 +2,18 @@
 // that means it doesn't allow direct access except for onself
 const cookie = document.cookie;
 if (cookie != getParam("ID", "") + " is authenticated and admin") {
-    window.location.href = "login.html";
+  window.location.href = "login.html";
 }
 
 //get parameter from URL
 function getParam(name, url) {
-    if (url == "") url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  if (url == "") url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
 const questionTab = document.querySelector('#questionTab');
@@ -26,7 +26,7 @@ questionTab.classList.add('active');
 createQuestionSection.style.display = 'block';
 viewScoresSection.style.display = 'none';
 
-questionTab.addEventListener('click', function(event) {
+questionTab.addEventListener('click', function (event) {
   event.preventDefault();
 
   // make clicked tab active
@@ -38,7 +38,7 @@ questionTab.addEventListener('click', function(event) {
   viewScoresSection.style.display = 'none';
 });
 
-scoreTab.addEventListener('click', function(event) {
+scoreTab.addEventListener('click', function (event) {
   event.preventDefault();
 
   // make clicked tab active 
@@ -57,16 +57,14 @@ const formWrapper = document.getElementById('form-wrapper');
 // フォーム要素を作成
 function createRandomForm() {
   formWrapper.innerHTML = `
-    <label for="grammar-questions">文法：</label>
-    <input type="number" id="grammar-questions" name="grammar-questions" min="0" max="100" step="1">
-    <span>問</span>
-
-    <label for="vocabulary-questions">語彙：</label>
-    <input type="number" id="vocabulary-questions" name="vocabulary-questions" min="0" max="100" step="1">
-    <span>問</span>
-
-    <button id="generate-btn" type="button">生成</button>
-    <button id="submit-btn" type="button">登録</button>
+  <label for="grammar-questions">文法：</label>
+  <input type="number" id="grammar-questions" name="grammar-questions" min="0" max="100" step="1">
+  <span>問</span><br>
+  <label for="vocabulary-questions">語彙：</label>
+  <input type="number" id="vocabulary-questions" name="vocabulary-questions" min="0" max="100" step="1">
+  <span>問</span><br>
+  <input type="button" id="generate-btn" value="生成"><br>
+  <input type="submit" id="submit-btn" value="登録">
   `;
 }
 
@@ -88,7 +86,7 @@ function createSelectForm() {
 }
 
 // セレクトボックスが変更されたら対応するフォームを表示
-createTypeSelect.addEventListener('change', function() {
+createTypeSelect.addEventListener('change', function () {
   if (createTypeSelect.value === 'random') {
     createRandomForm();
   } else if (createTypeSelect.value === 'select') {

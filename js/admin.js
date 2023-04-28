@@ -57,13 +57,19 @@ const formWrapper = document.getElementById('form-wrapper');
 // フォーム要素を作成
 function createRandomForm() {
   formWrapper.innerHTML = `
+  <div id="detail-content">
   <label for="grammar-questions">文法：</label>
-  <input type="text" id="grammar-questions" class="number-box" name="grammar-questions" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
+  <input type="text" id="grammar-questions" class="number-box" name="grammar-questions" maxlength="3"
+    oninput="value = value.replace(/[^0-9]+/i,'');" />
   <span>問</span><br>
   <label for="vocabulary-questions">語彙：</label>
-  <input type="text" id="vocabulary-questions" class="number-box" name="vocabulary-questions" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
+  <input type="text" id="vocabulary-questions" class="number-box" name="vocabulary-questions" maxlength="3"
+    oninput="value = value.replace(/[^0-9]+/i,'');" />
   <span>問</span><br>
   <input type="button" id="generate-btn" value="生成"><br>
+  </div>
+  <div id="generated-questions">
+  </div>
   `;
 }
 
@@ -92,3 +98,48 @@ createTypeSelect.addEventListener('change', function () {
     createSelectForm();
   }
 });
+
+const generate_btn = document.getElementById("generate-btn");
+const generated_questions = document.getElementById('generated-questions');
+generate_btn.addEventListener('click', function () {
+
+  //examples
+//   generated_questions.innerHTML = `
+//   <div class="question-container">
+//     <div class="question-text">
+//     <label for="question-title">問題1</label>
+//     <p name="question-title">The new employee was asked to submit the report by the end of the week, but she __________ it by Thursday.</p>
+//     </div>
+//     <ul class="answer-list">
+//     <li class="answer">A) would have completed</li>
+//     <li class="answer">B) had completed</li>
+//     <li class="answer">C) completed</li>
+//     <li class="answer">D) will complete</li>
+//     </ul>
+//   </div>
+//   <div class="question-container">
+//     <div class="question-text">  
+//     <label for="question-title">問題2</label>
+//     <p name="question-title">The CEO's __________ ideas inspired the team to work harder and more creatively.</p>
+//     </div>
+//     <ul class="answer-list">
+//     <li class="answer">選択肢1</li>
+//     <li class="answer">選択肢2</li>
+//     <li class="answer">選択肢3</li>
+//     <li class="answer">選択肢4</li>
+//     </ul>
+//   </div>
+//   <div class="question-container">
+//   <div class="question-text">  
+//   <label for="question-title">問題1</label>
+//   <p name="question-title">The new employee was asked to submit the report by the end of the week, but she __________ it by Thursday.</p>
+//   </div>
+//   <ul class="answer-list">
+//   <li class="answer">選択肢1</li>
+//   <li class="answer">選択肢2</li>
+//   <li class="answer">選択肢3</li>
+//   <li class="answer">選択肢4</li>
+//   </ul>
+// </div>
+//     `;
+})

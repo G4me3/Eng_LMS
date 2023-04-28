@@ -108,12 +108,6 @@ select {
     margin-bottom: 1vh;
 }
 
-#detail-content {
-    /* border: 1px solid #333;
-    width: 200px;
-    height: 200px; */
-}
-
 #grammar-questions {
     text-align: right;
     margin-top: 10px;
@@ -121,11 +115,16 @@ select {
 }
 
 #vocabulary-questions{
+    text-align: right;
     margin-bottom: 10px;
 }
 
 .number-box {
     width: 70px
+}
+
+#total_quantity{
+    display: inline;
 }
 
 #generate-btn,

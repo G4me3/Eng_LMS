@@ -21,6 +21,16 @@
   </nav>
 
   <main>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="questionnaire-name-form">
+          <label for="questionnaire-name">問題名を入力してください</label><br>
+          <input type="text" id="questionnaire-name" class="" name="questionnaire-name"/><br>
+          <input type="button" class="determine-btn" value="決定" onclick="registQuestionnaire()"/>
+        </div> 
+      </div>
+    </div>
     <div id="create-question" class="main-option">
       <label for="create-type">作成タイプ：</label>
       <select id="create-type">
@@ -41,11 +51,10 @@
           <label for="total_quantity">合計：</label>
           <p id="total_quantity" name="total_quantity">0</p>
           <span>問</span><br>
-          <input type="button" id="generate-btn" value="生成"><br>
+          <input type="button" id="generate-btn" value="生成" onclick="generateEvent()"><br>
         </div>
         <div id="generated-questions">
         </div>
-        <!-- <input type="submit" id="submit-btn" value="登録"> -->
       </div>
     </div>
     <div id="view-scores" class="main-section">

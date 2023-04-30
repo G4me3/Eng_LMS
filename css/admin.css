@@ -50,16 +50,21 @@ body {
     background-color: #66cc66;
 }
 
+.tab-content{
+    display: none;
+    margin-top: 2.5vh;
+    margin-left: 1vw;
+}
+
+.tab-content.active{
+    display: block;
+}
+
 img {
     margin-right: 0.5rem;
     margin-bottom: 0.5vh;
     width: 1.5rem;
     height: 1.5rem;
-}
-
-.main-option {
-    margin-top: 2.5vh;
-    margin-left: 1vw;
 }
 
 label {

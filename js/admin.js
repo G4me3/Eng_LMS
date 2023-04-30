@@ -17,38 +17,28 @@ function getParam(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-const questionTab = document.querySelector('#questionTab');
-const scoreTab = document.querySelector('#scoreTab');
-const createQuestionSection = document.querySelector('#create-question');
-const viewScoresSection = document.querySelector('#view-scores');
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
 
-// initiallize
-questionTab.classList.add('active');
-createQuestionSection.style.display = 'block';
-viewScoresSection.style.display = 'none';
+// make first tab active
+tabs[0].classList.add('active');
+tabContents[0].classList.add('active');
 
-questionTab.addEventListener('click', function (event) {
-  event.preventDefault();
+// process about when tab clicked
+tabs.forEach(tab => {
+  tab.addEventListener('click', e => {
+    const activeTab = document.querySelector('.tab.active');
+    const activeContent = document.querySelector('.tab-content.active');
+    let clickedTab = e.target.parentNode;
+    if (clickedTab.tagName.toLowerCase() === "a") clickedTab = clickedTab.parentNode;
+    const targetContent = document.querySelector(`#${clickedTab.dataset.tab}`);
 
-  // make clicked tab active
-  questionTab.classList.add('active');
-  scoreTab.classList.remove('active');
-
-  // change section shown
-  createQuestionSection.style.display = 'block';
-  viewScoresSection.style.display = 'none';
-});
-
-scoreTab.addEventListener('click', function (event) {
-  event.preventDefault();
-
-  // make clicked tab active 
-  scoreTab.classList.add('active');
-  questionTab.classList.remove('active');
-
-  // change section shown
-  viewScoresSection.style.display = 'block';
-  createQuestionSection.style.display = 'none';
+    // switch avtive and non active elements
+    activeTab.classList.remove('active');
+    clickedTab.classList.add('active');
+    activeContent.classList.remove('active');
+    targetContent.classList.add('active');
+  });
 });
 
 const createTypeSelect = document.getElementById('create-type');
@@ -69,7 +59,7 @@ function createRandomForm() {
     <label for="total_quantity">合計：</label>
     <p id="total_quantity" name="total_quantity">0</p>
     <span>問</span><br>
-    <input type="button" id="generate-btn" value="生成" onclick="generateEvent()"><br>
+    <input type="button" id="generate-btn" value="生成" onclick="generateRandom()"><br>
     </div>
     <div id="generated-questions">
     </div>
@@ -138,6 +128,9 @@ async function getDataFromSpreadSheet() {
   }
 }
 
+
+///////////////////↓ create questionnaire random ↓//////////////////////
+
 // check input quantity is valid or not 
 function checkNumberValidation(grammar_quantity, vocabulary_quantity) {
   if (parseInt(grammar_quantity) > grammar_list.length) {
@@ -152,11 +145,10 @@ function checkNumberValidation(grammar_quantity, vocabulary_quantity) {
     登録されている語彙問題：${vocabulary_list.length}`);
     return false;
   }
-  if(parseInt(grammar_quantity)+parseInt(vocabulary_quantity)==0){
+  if (parseInt(grammar_quantity) + parseInt(vocabulary_quantity) == 0) {
     alert(`一問も選択されていません`);
     return false;
   }
-
   return true;
 }
 
@@ -187,39 +179,74 @@ function shuffleArray(array) {
   return array;
 }
 
-// モーダルウィンドウを開く
+// open modal window
 function showDetermineNameForm() {
   document.getElementById("myModal").style.display = "block";
 }
 
-// モーダルウィンドウを閉じる
+// close modal window
 function closeModal() {
   document.getElementById("myModal").style.display = "none";
 }
 
-function registQuestionnaire() {
+let sheet_names = [];
+async function registQuestionnaire() {
   const questionnaire_name = document.getElementById("questionnaire-name").value || "";
-  if(questionnaire_name=="")alert("空白では登録できません");
+  if (questionnaire_name == "") alert("空白では登録できません");
 
-  //GETで問題集のスプレッドシートから全シート名を取得して
-  //名前がかぶってたら警告を出す
+  //GET all sheet names from SpreadSheet and check not to create sheet with the same name
+  const getURL = "https://script.google.com/macros/s/AKfycbz6sLn0QwU5fyTSUgF71VzvcWlS8pge7fb8nVDf-19JvBPQ8w6uGEkrh1jMjgoet1Vw/exec";
+  if (sheet_names.length == 0) {
+    try {
+      const response = await fetch(getURL);
+      const data = await response.json();
+      sheet_names = data;
+    } catch (error) {
+      console.error(error);
+    };
+  }
+  for (let sheet_num in sheet_names) {
+    if (sheet_names[sheet_num] == questionnaire_name) {
+      alert("その名前は既に使用されています");
+      return false;
+    }
+  }
 
-  //POSTでデータをGASに渡して登録
-  //終わったメッセージを出す
+  // POST request
+  // regist questionnaire to SpreadSheet
+  const postURL="https://script.google.com/macros/s/AKfycbxsqym2SlFsbf-7lkTEKY6E_MJmQxD7S34ss-NP48jh0FHtkcmJGihHJ2z3WBwPw5Zr/exec";
+  let sendData = [];
+  sendData.push(questionnaire_name);
+  for (let selected_question in selected_questions) {
+    sendData.push(selected_questions[selected_question]);
+  }
+
+  const postparam = {
+    "method": "POST",
+    "mode": "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "body": JSON.stringify(sendData),
+  };
+
+  fetch(postURL, postparam).then(()=>{
+    alert("登録が完了しました");
+    location.reload();
+  });
 }
 
 let selected_questions = [];
 // manager of generating questions 
-async function generateEvent() {
-  await getDataFromSpreadSheet();
+async function generateRandom() {
+  if(grammar_list.length==0) await getDataFromSpreadSheet();
   const grammar_quantity = document.getElementById("grammar-questions").value || 0;
   const vocabulary_quantity = document.getElementById("vocabulary-questions").value || 0;
   if (!checkNumberValidation(grammar_quantity, vocabulary_quantity)) return false;
-  
+
   selected_questions = [];
   selected_questions = generateQuestionRandomly("grammar", grammar_quantity, selected_questions); //add grammar
   selected_questions = generateQuestionRandomly("vocabulary", vocabulary_quantity, selected_questions);//add vocabulary
   selected_questions = shuffleArray(selected_questions);
+  console.log(selected_questions);
 
   const generated_questions = document.getElementById('generated-questions');
   generated_questions.innerHTML = "";
@@ -248,4 +275,10 @@ async function generateEvent() {
   generated_questions.innerHTML += `<input type="button" id="submit-btn" value="登録" onclick="showDetermineNameForm()">`;
 }
 
+///////////////////↑ create questionnaire random ↑//////////////////////
 
+///////////////////↓ create questionnaire select ↓//////////////////////
+
+
+
+///////////////////↑ create questionnaire select ↑//////////////////////

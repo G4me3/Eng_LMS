@@ -14,9 +14,9 @@
 
   <nav class="global-nav">
     <ul>
-      <li class="tab" id="questionTab"><a href="#"><img src="./img/create-question-icon.svg"
+      <li class="tab" id="questionTab" data-tab="create-question"><a href="#"><img src="./img/create-question-icon.svg"
             alt="Create Question">問題作成</a></li>
-      <li class="tab" id="scoreTab"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
+      <li class="tab" id="scoreTab" data-tab="view-scores"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
     </ul>
   </nav>
 
@@ -31,7 +31,7 @@
         </div> 
       </div>
     </div>
-    <div id="create-question" class="main-option">
+    <div id="create-question" class="tab-content">
       <label for="create-type">作成タイプ：</label>
       <select id="create-type">
         <option value="random">ランダム作成</option>
@@ -57,12 +57,13 @@
         </div>
       </div>
     </div>
-    <div id="view-scores" class="main-section">
+    <div id="view-scores" class="tab-content">
       <h2>成績閲覧</h2>
       <p>準備中</p>
     </div>
   </main>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./js/admin.js"></script>
 </body>
 

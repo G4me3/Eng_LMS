@@ -77,23 +77,91 @@ function createRandomForm() {
   })
 }
 
-function createSelectForm() {
-  formWrapper.innerHTML = `
-  <table>
-  <thead>
-  <tr>
-          <th>ID</th>
-          <th>問題名</th>
-          <th>作成日</th>
-          </tr>
-          </thead>
-      <tbody>
-      <!-- 表の内容がここに入ります -->
-      </tbody>
-      </table>
-      `;
-}
+async function createSelectForm() {
+  if (Object.keys(grammar_list).length == 0) await getDataFromSpreadSheet();
+  formWrapper.innerHTML = `        
+  <div id="detail-content">
+    <label for="show-option">表示：</label>
+    <select id="show-option" name="show-option">
+      <option value="all">すべて</option>
+      <option value="grammar">文法</option>
+      <option value="vocabulary">語彙</option>
+    </select><br>
+    <label for="total_quantity">選択中：</label>
+    <p id="total_quantity" name="total_quantity">0</p>
+    <span>問</span><br>
+    <input type="button" id="generate-btn" value="登録" onclick="showDetermineNameForm()"><br>
+  </div>
+  <div id="generated-questions">
+    <div id="grammar-list"></div>
+    <div id="vocabulary-list"></div>
+  </div>
+    `;
 
+  const grammar_area = document.getElementById("grammar-list");
+  for (grammar_list_num in grammar_list) {
+    grammar_area.innerHTML += `
+    <div class="question-container">
+      <div class="question-text">
+        <input class="select-check" type="checkbox" />
+        <label for="question-title">文法-${parseInt(grammar_list_num) + 1}</label>
+        <p name="question-title">${grammar_list[grammar_list_num].問題文}</p>
+      </div>
+      <ul class="choice-list">
+        <label for="choice1">A) ：</label>
+        <li class="choice" name="choice1">${grammar_list[grammar_list_num].選択肢1}</li><br>
+        <label for="choice2">B) ：</label>
+        <li class="choice" name="choice2">${grammar_list[grammar_list_num].選択肢2}</li><br>
+        <label for="choice3">C) ：</label>
+        <li class="choice" name="choice3">${grammar_list[grammar_list_num].選択肢3}</li><br>
+        <label for="choice4">D) ：</label>
+        <li class="choice" name="choice4">${grammar_list[grammar_list_num].選択肢4}</li><br>
+        <label for="answer">正解：</label>
+        <li class="answer" name="answer">${grammar_list[grammar_list_num].正答}</li>
+      </ul>
+   </div>
+   `;
+  }
+  const vocabulary_area = document.getElementById("vocabulary-list");
+  for (vocabulary_list_num in vocabulary_list) {
+    vocabulary_area.innerHTML += `
+    <div class="question-container">
+      <div class="question-text">
+        <input class="select-check" type="checkbox" />
+        <label for="question-title">語彙-${parseInt(vocabulary_list_num) + 1}</label>
+        <p name="question-title">${vocabulary_list[vocabulary_list_num].問題文}</p>
+      </div>
+      <ul class="choice-list">
+        <label for="choice1">A) ：</label>
+        <li class="choice" name="choice1">${vocabulary_list[vocabulary_list_num].選択肢1}</li><br>
+        <label for="choice2">B) ：</label>
+        <li class="choice" name="choice2">${vocabulary_list[vocabulary_list_num].選択肢2}</li><br>
+        <label for="choice3">C) ：</label>
+        <li class="choice" name="choice3">${vocabulary_list[vocabulary_list_num].選択肢3}</li><br>
+        <label for="choice4">D) ：</label>
+        <li class="choice" name="choice4">${vocabulary_list[vocabulary_list_num].選択肢4}</li><br>
+        <label for="answer">正解：</label>
+        <li class="answer" name="answer">${vocabulary_list[vocabulary_list_num].正答}</li>
+      </ul>
+    </div>
+    `;
+  }
+
+  // show forms depends on <select> value 
+  const show_option = document.getElementById("show-option");
+  show_option.addEventListener('change', function () {
+    if (show_option.value === "all") {
+      document.getElementById("grammar-list").style.display = "block";
+      document.getElementById("vocabulary-list").style.display = "block";
+    } else if (show_option.value === 'grammar') {
+      document.getElementById("grammar-list").style.display = "block";
+      document.getElementById("vocabulary-list").style.display = "none";
+    } else if (show_option.value === 'vocabulary') {
+      document.getElementById("grammar-list").style.display = "none";
+      document.getElementById("vocabulary-list").style.display = "block";
+    }
+  });
+}
 // show forms depends on <select> value 
 createTypeSelect.addEventListener('change', function () {
   if (createTypeSelect.value === 'random') {
@@ -114,10 +182,19 @@ number_box.forEach(element => {
   })
 })
 
+function startLoading() {
+  document.getElementById("loader").style.display = "block";
+}
+
+function endLoading() {
+  document.getElementById("loader").style.display = "none";
+}
+
 // get Json from Google SpreadSheet
 let grammar_list = {};
-let vacabulary_list = {};
+let vocabulary_list = {};
 async function getDataFromSpreadSheet() {
+  startLoading();
   try {
     const response = await fetch('https://script.google.com/macros/s/AKfycbzSFIvoRCY4yokWGYO0zApavcOP_4fo0A5XFhOuUWkfZ9Nu43gZmjkyMAenquKBfev8ng/exec');
     const data = await response.json();
@@ -126,8 +203,8 @@ async function getDataFromSpreadSheet() {
   } catch (error) {
     console.error(error);
   }
+  endLoading();
 }
-
 
 ///////////////////↓ create questionnaire random ↓//////////////////////
 
@@ -214,7 +291,7 @@ async function registQuestionnaire() {
 
   // POST request
   // regist questionnaire to SpreadSheet
-  const postURL="https://script.google.com/macros/s/AKfycbxsqym2SlFsbf-7lkTEKY6E_MJmQxD7S34ss-NP48jh0FHtkcmJGihHJ2z3WBwPw5Zr/exec";
+  const postURL = "https://script.google.com/macros/s/AKfycbxsqym2SlFsbf-7lkTEKY6E_MJmQxD7S34ss-NP48jh0FHtkcmJGihHJ2z3WBwPw5Zr/exec";
   let sendData = [];
   sendData.push(questionnaire_name);
   for (let selected_question in selected_questions) {
@@ -228,7 +305,7 @@ async function registQuestionnaire() {
     "body": JSON.stringify(sendData),
   };
 
-  fetch(postURL, postparam).then(()=>{
+  fetch(postURL, postparam).then(() => {
     alert("登録が完了しました");
     location.reload();
   });
@@ -237,7 +314,7 @@ async function registQuestionnaire() {
 let selected_questions = [];
 // manager of generating questions 
 async function generateRandom() {
-  if(grammar_list.length==0) await getDataFromSpreadSheet();
+  if (Object.keys(grammar_list).length == 0) await getDataFromSpreadSheet();
   const grammar_quantity = document.getElementById("grammar-questions").value || 0;
   const vocabulary_quantity = document.getElementById("vocabulary-questions").value || 0;
   if (!checkNumberValidation(grammar_quantity, vocabulary_quantity)) return false;

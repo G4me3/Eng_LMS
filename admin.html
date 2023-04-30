@@ -16,19 +16,20 @@
     <ul>
       <li class="tab" id="questionTab" data-tab="create-question"><a href="#"><img src="./img/create-question-icon.svg"
             alt="Create Question">問題作成</a></li>
-      <li class="tab" id="scoreTab" data-tab="view-scores"><a href="#"><img src="./img/view-scores-icon.svg" alt="View Scores">成績閲覧</a></li>
+      <li class="tab" id="scoreTab" data-tab="view-scores"><a href="#"><img src="./img/view-scores-icon.svg"
+            alt="View Scores">成績閲覧</a></li>
     </ul>
   </nav>
-
+    <div id="loader" class="loader"></div>
   <main>
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="questionnaire-name-form">
           <label for="questionnaire-name">問題名を入力してください</label><br>
-          <input type="text" id="questionnaire-name" class="" name="questionnaire-name"/><br>
-          <input type="button" class="determine-btn" value="決定" onclick="registQuestionnaire()"/>
-        </div> 
+          <input type="text" id="questionnaire-name" class="" name="questionnaire-name" /><br>
+          <input type="button" class="determine-btn" value="決定" onclick="registQuestionnaire()" />
+        </div>
       </div>
     </div>
     <div id="create-question" class="tab-content">
@@ -51,7 +52,7 @@
           <label for="total_quantity">合計：</label>
           <p id="total_quantity" name="total_quantity">0</p>
           <span>問</span><br>
-          <input type="button" id="generate-btn" value="生成" onclick="generateEvent()"><br>
+          <input type="button" id="generate-btn" value="生成" onclick="generateRandom()"><br>
         </div>
         <div id="generated-questions">
         </div>

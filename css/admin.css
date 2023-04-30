@@ -12,6 +12,94 @@ body {
     box-sizing: border-box;
 }
 
+/* loadin animation start */
+
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+}
+
+.load-text{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+}
+
+.loader {
+    display: none;
+    color: #472424;
+    font-size: 11px;
+    text-indent: -99999em;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    width: 10em;
+    height: 10em;
+    box-shadow: inset 0 0 0 1em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.loader:before,
+.loader:after {
+    position: absolute;
+    content: '';
+}
+
+.loader:before {
+    width: 5.2em;
+    height: 10.2em;
+    background: #ffffff;
+    border-radius: 10.2em 0 0 10.2em;
+    top: -0.1em;
+    left: -0.1em;
+    -webkit-transform-origin: 5.1em 5.1em;
+    transform-origin: 5.1em 5.1em;
+    -webkit-animation: load2 2s infinite ease 1.5s;
+    animation: load2 2s infinite ease 1.5s;
+}
+
+.loader:after {
+    width: 5.2em;
+    height: 10.2em;
+    background: #ffffff;
+    border-radius: 0 10.2em 10.2em 0;
+    top: -0.1em;
+    left: 4.9em;
+    -webkit-transform-origin: 0.1em 5.1em;
+    transform-origin: 0.1em 5.1em;
+    -webkit-animation: load2 2s infinite ease;
+    animation: load2 2s infinite ease;
+}
+
+@-webkit-keyframes load2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+/* loading animation fin */
+
 /* global navigation start */
 
 .global-nav {
@@ -50,13 +138,13 @@ body {
     background-color: #66cc66;
 }
 
-.tab-content{
+.tab-content {
     display: none;
     margin-top: 2.5vh;
     margin-left: 1vw;
 }
 
-.tab-content.active{
+.tab-content.active {
     display: block;
 }
 
@@ -73,7 +161,7 @@ label {
     margin-right: 10px;
 }
 
-select {
+#create-type {
     font-size: 18px;
     width: 140px;
     height: 25px;
@@ -126,7 +214,7 @@ select {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
 label[for="questionnaire-name"] {
@@ -252,6 +340,18 @@ label[for="answer"] {
     left: 22vw;
     margin-top: -1vh;
     margin-bottom: 5vh;
+}
+
+#show-option{
+    font-size: 16px;
+    width: 100px;
+    height: 25px;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.select-check{
+    scale: 1.2;
 }
 
 /* generated questions area fin */

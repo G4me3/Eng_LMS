@@ -77,6 +77,30 @@ function createRandomForm() {
   })
 }
 
+// get number of checkbox checked and show that
+function showCheckedNum() {
+  let checkedNumber = 0;
+  const select_check = document.querySelectorAll("input[type=checkbox]");
+  select_check.forEach((element) => {
+    if (element.checked) {
+      checkedNumber++;
+    }
+  });
+  const total_quantity = document.getElementById("total_quantity");
+  total_quantity.textContent = `${checkedNumber}`;
+}
+
+function showCheckedQuestions() {
+  const select_check = document.querySelectorAll("input[type=checkbox]");
+  const checkedValues=[]
+  select_check.forEach(element=>{
+    if(element.checked){
+      checkedValues.push(element.value);
+    }
+  })
+  ///チェックした問題を見ることができるように
+}
+
 async function createSelectForm() {
   if (Object.keys(grammar_list).length == 0) await getDataFromSpreadSheet();
   formWrapper.innerHTML = `        
@@ -86,15 +110,16 @@ async function createSelectForm() {
       <option value="all">すべて</option>
       <option value="grammar">文法</option>
       <option value="vocabulary">語彙</option>
-    </select><br>
+      </select><br>
     <label for="total_quantity">選択中：</label>
     <p id="total_quantity" name="total_quantity">0</p>
     <span>問</span><br>
+    <p id="show-checked-questions" class="show-checked-questions">選択した問題を見る</p>
     <input type="button" id="generate-btn" value="登録" onclick="showDetermineNameForm()"><br>
   </div>
   <div id="generated-questions">
-    <div id="grammar-list"></div>
-    <div id="vocabulary-list"></div>
+  <div id="grammar-list"></div>
+  <div id="vocabulary-list"></div>
   </div>
     `;
 
@@ -103,11 +128,11 @@ async function createSelectForm() {
     grammar_area.innerHTML += `
     <div class="question-container">
       <div class="question-text">
-        <input class="select-check" type="checkbox" />
+      <input class="select-check" type="checkbox" value="g${parseInt(grammar_list_num) + 1}"/>
         <label for="question-title">文法-${parseInt(grammar_list_num) + 1}</label>
         <p name="question-title">${grammar_list[grammar_list_num].問題文}</p>
-      </div>
-      <ul class="choice-list">
+        </div>
+        <ul class="choice-list">
         <label for="choice1">A) ：</label>
         <li class="choice" name="choice1">${grammar_list[grammar_list_num].選択肢1}</li><br>
         <label for="choice2">B) ：</label>
@@ -126,29 +151,26 @@ async function createSelectForm() {
   for (vocabulary_list_num in vocabulary_list) {
     vocabulary_area.innerHTML += `
     <div class="question-container">
-      <div class="question-text">
-        <input class="select-check" type="checkbox" />
-        <label for="question-title">語彙-${parseInt(vocabulary_list_num) + 1}</label>
-        <p name="question-title">${vocabulary_list[vocabulary_list_num].問題文}</p>
-      </div>
-      <ul class="choice-list">
-        <label for="choice1">A) ：</label>
-        <li class="choice" name="choice1">${vocabulary_list[vocabulary_list_num].選択肢1}</li><br>
-        <label for="choice2">B) ：</label>
-        <li class="choice" name="choice2">${vocabulary_list[vocabulary_list_num].選択肢2}</li><br>
-        <label for="choice3">C) ：</label>
-        <li class="choice" name="choice3">${vocabulary_list[vocabulary_list_num].選択肢3}</li><br>
-        <label for="choice4">D) ：</label>
-        <li class="choice" name="choice4">${vocabulary_list[vocabulary_list_num].選択肢4}</li><br>
-        <label for="answer">正解：</label>
-        <li class="answer" name="answer">${vocabulary_list[vocabulary_list_num].正答}</li>
-      </ul>
+    <div class="question-text">
+    <input class="select-check" type="checkbox" value="v${parseInt(vocabulary_list_num) + 1}"/>
+    <label for="question-title">語彙-${parseInt(vocabulary_list_num) + 1}</label>
+    <p name="question-title">${vocabulary_list[vocabulary_list_num].問題文}</p>
     </div>
-    `;
+    <ul class="choice-list">
+    <label for="choice1">A) ：</label>
+    <li class="choice" name="choice1">${vocabulary_list[vocabulary_list_num].選択肢1}</li><br>
+    <label for="choice2">B) ：</label>
+    <li class="choice" name="choice2">${vocabulary_list[vocabulary_list_num].選択肢2}</li><br>
+    <label for="choice3">C) ：</label>
+    <li class="choice" name="choice3">${vocabulary_list[vocabulary_list_num].選択肢3}</li><br>
+    <label for="choice4">D) ：</label>
+    <li class="choice" name="choice4">${vocabulary_list[vocabulary_list_num].選択肢4}</li><br>
+    <label for="answer">正解：</label>
+    <li class="answer" name="answer">${vocabulary_list[vocabulary_list_num].正答}</li>
+      </ul>
+      </div>
+      `;
   }
-
-  //チェック入ってる問題の数と内容を表示できるように
-  //あとは問題集の一覧を見れるようにする？？
 
   // show forms depends on <select> value 
   const show_option = document.getElementById("show-option");
@@ -164,7 +186,21 @@ async function createSelectForm() {
       document.getElementById("vocabulary-list").style.display = "block";
     }
   });
+
+  const select_check = document.querySelectorAll("input[type=checkbox]");
+  select_check.forEach(element => {
+    element.addEventListener("change", function () {
+      showCheckedNum();
+    });
+  })
+
+  const show_checked_questions = document.getElementById("show-checked-questions");
+  show_checked_questions.addEventListener("click", function () {
+    showCheckedQuestions();
+  })
+
 }
+
 // show forms depends on <select> value 
 createTypeSelect.addEventListener('change', function () {
   if (createTypeSelect.value === 'random') {
@@ -355,10 +391,4 @@ async function generateRandom() {
   generated_questions.innerHTML += `<input type="button" id="submit-btn" value="登録" onclick="showDetermineNameForm()">`;
 }
 
-///////////////////↑ create questionnaire random ↑//////////////////////
-
-///////////////////↓ create questionnaire select ↓//////////////////////
-
-
-
-///////////////////↑ create questionnaire select ↑//////////////////////
+///////////////////↑ create questionnaire  ↑//////////////////////

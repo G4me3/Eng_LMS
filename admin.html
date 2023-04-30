@@ -32,6 +32,18 @@
         </div>
       </div>
     </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="questionnaire-name-form">
+          <label for="questionnaire-name">問題名を入力してください</label><br>
+          <input type="text" id="questionnaire-name" class="" name="questionnaire-name" /><br>
+          <input type="button" class="determine-btn" value="決定" onclick="registQuestionnaire()" />
+        </div>
+      </div>
+    </div>
+
     <div id="create-question" class="tab-content">
       <label for="create-type">作成タイプ：</label>
       <select id="create-type">

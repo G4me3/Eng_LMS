@@ -348,10 +348,18 @@ label[for="answer"] {
     height: 25px;
     text-align: center;
     margin-bottom: 2vh;
+    cursor: pointer;
+}
+
+.show-checked-questions{
+    color:#1a0dab;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .select-check{
     scale: 1.2;
+    cursor: pointer;
 }
 
 /* generated questions area fin */

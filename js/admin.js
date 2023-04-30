@@ -147,6 +147,9 @@ async function createSelectForm() {
     `;
   }
 
+  //チェック入ってる問題の数と内容を表示できるように
+  //あとは問題集の一覧を見れるようにする？？
+
   // show forms depends on <select> value 
   const show_option = document.getElementById("show-option");
   show_option.addEventListener('change', function () {

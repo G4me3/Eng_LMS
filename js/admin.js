@@ -307,6 +307,10 @@ function closeModal() {
 
 let sheet_names = [];
 async function registQuestionnaire() {
+  closeModal();
+  const question_container=document.getElementById("generated-questions");
+  question_container.style.display="none";
+  startLoading();
   const questionnaire_name = document.getElementById("questionnaire-name").value || "";
   if (questionnaire_name == "") alert("空白では登録できません");
 

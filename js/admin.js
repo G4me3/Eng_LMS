@@ -92,9 +92,9 @@ function showCheckedNum() {
 
 function showCheckedQuestions() {
   const select_check = document.querySelectorAll("input[type=checkbox]");
-  const checkedValues=[]
-  select_check.forEach(element=>{
-    if(element.checked){
+  const checkedValues = []
+  select_check.forEach(element => {
+    if (element.checked) {
       checkedValues.push(element.value);
     }
   })
@@ -245,7 +245,7 @@ async function getDataFromSpreadSheet() {
   endLoading();
 }
 
-///////////////////↓ create questionnaire random ↓//////////////////////
+///////////////////↓ create questionnaire ↓//////////////////////
 
 // check input quantity is valid or not 
 function checkNumberValidation(grammar_quantity, vocabulary_quantity) {
@@ -301,15 +301,15 @@ function showDetermineNameForm() {
 }
 
 // close modal window
-function closeModal() {
+function closeDetermineNameForm() {
   document.getElementById("myModal").style.display = "none";
 }
 
 let sheet_names = [];
 async function registQuestionnaire() {
-  closeModal();
-  const question_container=document.getElementById("generated-questions");
-  question_container.style.display="none";
+  closeDetermineNameForm();
+  const question_container = document.getElementById("generated-questions");
+  question_container.style.display = "none";
   startLoading();
   const questionnaire_name = document.getElementById("questionnaire-name").value || "";
   if (questionnaire_name == "") alert("空白では登録できません");
@@ -328,6 +328,8 @@ async function registQuestionnaire() {
   for (let sheet_num in sheet_names) {
     if (sheet_names[sheet_num] == questionnaire_name) {
       alert("その名前は既に使用されています");
+      endLoading();
+      question_container.style.display = "block";
       return false;
     }
   }

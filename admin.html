@@ -22,7 +22,7 @@
   </nav>
     <div id="loader" class="loader"></div>
   <main>
-    <div id="myModal" class="modal">
+    <div id="form-modal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeDetermineNameForm()">&times;</span>
         <div class="questionnaire-name-form">
@@ -33,15 +33,9 @@
       </div>
     </div>
 
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeDetermineNameForm()">&times;</span>
-        <div class="questionnaire-name-form">
-          <label for="questionnaire-name">問題名を入力してください</label><br>
-          <input type="text" id="questionnaire-name" class="" name="questionnaire-name" /><br>
-          <input type="button" class="determine-btn" value="決定" onclick="registQuestionnaire()" />
-        </div>
-      </div>
+    <div id="list-modal" class="modal2">
+      <span class="close2" onclick="closeCheckedQuestionsListModal()">&times;</span>
+      <div id="list-modal-content" class="modal-content2"></div>
     </div>
 
     <div id="create-question" class="tab-content">

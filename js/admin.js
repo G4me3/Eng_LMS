@@ -90,6 +90,14 @@ function showCheckedNum() {
   total_quantity.textContent = `${checkedNumber}`;
 }
 
+function showCheckedQuestionsListModal() {
+  document.getElementById("list-modal").style.display = "block";
+}
+
+function closeCheckedQuestionsListModal() {
+  document.getElementById("list-modal").style.display = "none";
+}
+
 function showCheckedQuestions() {
   const select_check = document.querySelectorAll("input[type=checkbox]");
   const checkedValues = []
@@ -98,7 +106,62 @@ function showCheckedQuestions() {
       checkedValues.push(element.value);
     }
   })
-  ///チェックした問題を見ることができるように
+  let list_modal_content = document.getElementById("list-modal-content");
+  list_modal_content.innerHTML = ``;
+  let count = 0;
+  for (value of checkedValues) {
+    console.log(value);
+    if (value.charAt(0) === "g") {
+      let questionID=value.substring(1);
+      value = value.substring(1);
+      value = parseInt(value) - 1;
+      list_modal_content.innerHTML += `
+      <div class="question-container">
+        <div class="question-text">
+          <label for="question-title">問題${++count}(${grammar_list[value].category}-${questionID})</label>
+          <p name="question-title">${grammar_list[value].問題文}</p>
+        </div>
+        <ul class="choice-list">
+          <label for="choice1">A) ：</label>
+          <li class="choice" name="choice1">${grammar_list[value].選択肢1}</li><br>
+          <label for="choice2">B) ：</label>
+          <li class="choice" name="choice2">${grammar_list[value].選択肢2}</li><br>
+          <label for="choice3">C) ：</label>
+          <li class="choice" name="choice3">${grammar_list[value].選択肢3}</li><br>
+          <label for="choice4">D) ：</label>
+          <li class="choice" name="choice4">${grammar_list[value].選択肢4}</li><br>
+          <label for="answer">正解：</label>
+          <li class="answer" name="answer">${grammar_list[value].正答}</li>
+        </ul>
+     </div>`;
+    }
+    else if (value.charAt(0) === "v") {
+      let questionID=value.substring(1);
+      value = value.substring(1);
+      value = parseInt(value) - 1;
+      list_modal_content.innerHTML += `
+      <div class="question-container">
+        <div class="question-text">
+          <label for="question-title">問題${++count}(${vocabulary_list[value].category}-${questionID})</label>
+          <p name="question-title">${vocabulary_list[value].問題文}</p>
+        </div>
+        <ul class="choice-list">
+          <label for="choice1">A) ：</label>
+          <li class="choice" name="choice1">${vocabulary_list[value].選択肢1}</li><br>
+          <label for="choice2">B) ：</label>
+          <li class="choice" name="choice2">${vocabulary_list[value].選択肢2}</li><br>
+          <label for="choice3">C) ：</label>
+          <li class="choice" name="choice3">${vocabulary_list[value].選択肢3}</li><br>
+          <label for="choice4">D) ：</label>
+          <li class="choice" name="choice4">${vocabulary_list[value].選択肢4}</li><br>
+          <label for="answer">正解：</label>
+          <li class="answer" name="answer">${vocabulary_list[value].正答}</li>
+        </ul>
+     </div>`;
+    }
+
+  }
+  showCheckedQuestionsListModal();
 }
 
 async function createSelectForm() {
@@ -297,12 +360,12 @@ function shuffleArray(array) {
 
 // open modal window
 function showDetermineNameForm() {
-  document.getElementById("myModal").style.display = "block";
+  document.getElementById("form-modal").style.display = "block";
 }
 
 // close modal window
 function closeDetermineNameForm() {
-  document.getElementById("myModal").style.display = "none";
+  document.getElementById("form-modal").style.display = "none";
 }
 
 let sheet_names = [];

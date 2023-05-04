@@ -10,31 +10,16 @@
 
 <body>
   <header id="header"></header>
+  <div id="loader" class="loader"></div>
   <h1 id="welcome-msg"></h1>
-  <table class="score-table">
+  <table id="score-table" class="score-table">
     <thead>
       <tr>
         <th>問題</th>
-        <th>前回のスコア</th>
-        <th>結果</th>
+        <th>今までの結果</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td><a href="">問題</a></td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td><a href="">問題2</a></td>
-        <td>70</td>
-        <td><a href="">結果</a></td>
-      </tr>
-      <tr>
-        <td><a href="">問題3</a></td>
-        <td>90</td>
-        <td><a href="">結果</a></td>
-      </tr>
+    <tbody id="table-body">
     </tbody>
   </table>
   <script src="./js/top.js"></script>

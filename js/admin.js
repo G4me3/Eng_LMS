@@ -1,4 +1,3 @@
-
 // if login is not authenticated, back to login page
 // that means it doesn't allow direct access except for onself
 const cookie = document.cookie;

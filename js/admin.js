@@ -164,7 +164,9 @@ function showCheckedQuestions() {
 }
 
 async function createSelectForm() {
-  if (Object.keys(grammar_list).length == 0) await getDataFromSpreadSheet();
+  document.getElementById("generated-questions").style.display="none";
+  await getDataFromSpreadSheet();
+  document.getElementById("generated-questions").style.display="block";
   formWrapper.innerHTML = `        
   <div id="detail-content">
     <label for="show-option">表示：</label>

@@ -6,14 +6,14 @@ async function getJson() {
 }
 
 // Create ID and password list from Json data
-const adminList=[];
+const adminList = [];
 async function createIDAndPassList() {
     const data = await getJson();
     const jsonArray = data[0];
     const IDAndPassList = {};
     jsonArray.forEach(item => {
         IDAndPassList[item.ID] = item.pass;
-        if(item.authority=="administrator"){
+        if (item.authority == "administrator") {
             adminList.push(item.ID);
         }
     });
@@ -28,13 +28,13 @@ showPasswordCheckbox.addEventListener("change", function () {
 });
 
 // check user is admin or not and move page depends on the result
-function checkAuthority(loginID){
-    adminList.forEach(admin=>{
-        if(admin==loginID){
-            document.cookie = `${loginID} is authenticated and admin`;
-            window.location.href=`./admin.html?ID=${loginID}&auth=true`;
-        }else{
-            document.cookie = `${loginID} is authenticated`;
+function checkAuthority(loginID) {
+    adminList.forEach(admin => {
+        if (admin == loginID) {
+            sessionStorage.setItem("message", `${loginID} is authenticated and admin`);
+            window.location.href = `./admin.html?ID=${loginID}&auth=true`;
+        } else {
+            sessionStorage.setItem("message", `${loginID} is authenticated`);
             window.location.href = `./top.html?ID=${loginID}&auth=true`;
         }
     })

@@ -1,7 +1,7 @@
 // if login is not authenticated, back to login page
 // that means it doesn't allow direct access except for onself
 const sessionStorageValue = sessionStorage.getItem("message");
-if (sessionStorageValue != getParam("ID", "") + " is authenticated") {
+if (sessionStorageValue != getParam("ID", "") + " is authenticated and admin") {
     window.location.href = "login.html";
 }
 
